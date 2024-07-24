@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "LanguageTool (old version)",
   "short_name": "LanguageTool",
   "version": "1.0.48",
@@ -12,24 +12,21 @@
   "author": "Daniel Naber",
   "homepage_url": "https://languagetool.org",
   "offline_enabled": false,
-  "action": {
+  "browser_action": {
     "default_icon": "images/icon48.png",
     "default_popup": "popup.html",
-    "default_title": "__MSG_tooltip__"
+    "default_title": "__MSG_tooltip__",
+    "browser_style": false
   },
   "permissions": [
     "activeTab",
     "storage",
-    "contextMenus",
-    "scripting"
+    "contextMenus"
   ],
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["bs/background.js", "share/tools.js", "bs/common.js", "share/markup.js"]
   },
-  "web_accessible_resources": [{
-    "resources": ["images/*", "**/*.js", "vendors/*", "popup.html"],
-    "matches": ["<all_urls>"]
-  }],
+  "web_accessible_resources": ["images/*", "**/*.js", "vendors/*", "popup.html"],
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "file:///*"],
@@ -59,7 +56,7 @@
     }
   ],
   "commands": {
-    "_execute_action": {
+    "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+Space"
       }
@@ -67,6 +64,11 @@
   },
   "options_ui": {
     "page": "options.html",
-    "open_in_tab": true
+    "chrome_style": true
+  },
+  "applications": {
+    "gecko": {
+      "id": "languagetool-webextension@languagetool.org"
+    }
   }
 }
